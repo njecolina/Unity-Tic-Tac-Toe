@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         {
             side = "X";
         }
-        moves++;
+        //moves++;
         // prikaz na game panelu koji je potez
         movesText.text = "Move " + moves + ".";
     }
@@ -101,21 +101,39 @@ public class GameManager : MonoBehaviour
             // pobjeda
             CheckWin();
         }
+        ChangeSide();
     }
 
     // provjera pobjede
     public void CheckWin()
     {
         gameObject.SetActive(true);
-        if (moves % 2 == 0)
+
+
+        //nerješeno
+        if (moves > 9)
+        {
+            gameOverPanel.GetComponentInChildren<TextMeshProUGUI>().text = "TIE!";
+        }
+
+        // X pobjedio - prvi player
+        else if (moves % 2 == 0)
         {
             gameOverPanel.GetComponentInChildren<TextMeshProUGUI>().text = playerOneName.text + " WINS!";
             PlayerPrefs.SetInt("ScoreOne", PlayerPrefs.GetInt("ScoreOne") + 1);
         }
+
+        // O pobjedio - drugi player
         else
         {
             gameOverPanel.GetComponentInChildren<TextMeshProUGUI>().text = playerTwoName.text + " WINS!";
             PlayerPrefs.SetInt("ScoreTwo", PlayerPrefs.GetInt("ScoreTwo") + 1);
         }
+    }
+
+    // Resetiranje igre
+    public void ResetGame()
+    {
+        Start();
     }
 }
